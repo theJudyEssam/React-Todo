@@ -1,0 +1,99 @@
+.homepage-title{
+    font-size: 2rem;
+    margin: 5rem;
+    text-align: center;
+}
+
+
+.todo-add{
+    display: flex;
+    gap: 10px;
+    margin: 5rem;
+    align-items: center;
+}
+
+.todo-add input{
+    font-size: 1rem;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    flex: 1;
+}
+
+.todo-add button{
+    font-size: 1rem;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.todo-add button:hover{
+    background-color: #ddd;
+}
+
+
+.todo-list{
+    margin: 5rem;
+    padding: 0;
+    list-style: none;
+}
+
+
+
+.todo{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+
+
+.todo h2{
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+
+.todo button:hover{
+    background-color: #ddd;
+}
+
+.todo button{
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.todo-actions{
+    display: flex;
+    gap: 10px;
+}
+
+.todo-info{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.todo p{
+    margin: 0;
+}
+
+
+
+.logout{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
