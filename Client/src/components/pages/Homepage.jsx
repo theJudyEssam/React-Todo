@@ -1,11 +1,18 @@
 import Todo from "../Todo"
+import { useAuth } from "../context/authContext";
 
 
 //this will be the main todo thingie
 function Homepage(props) {
+
+  const {user, isAuthenticated} = useAuth();
+
   return (
     <div className="homepage">
+        {isAuthenticated ? 
 
+
+        <>        
       <h1 className="homepage-title">Welcome back {props.name} to TodoBrownie</h1>
 
       <div className="todo-add">
@@ -19,7 +26,13 @@ function Homepage(props) {
         <Todo task="Attend the Formula 1 meeting"/>
       </div>
 
-      <button className="logout">Logout</button>
+      <button className="logout">Logout</button></>
+
+        
+        
+      : <p>Oops! You have not logged in yet, {isAuthenticated}</p>}
+
+
       
     </div>
   );
