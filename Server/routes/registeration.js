@@ -87,7 +87,7 @@ AuthRouter.post('/login', async (req, res) => {
             if(result){
                 const token = jwt.sign({data:username}, process.env.SECRET, {expiresIn: '1h'})
 
-                res.cookie('token', token, {httpOnly: true, sameSite: 'None', maxAge: 3600000})
+                res.cookie('token', token, {httpOnly: true, sameSite: 'None', maxAge: 60})
 
                 res.status(200).json({
                     status: "success",
@@ -114,27 +114,21 @@ AuthRouter.get('/logout', (req, res) => {
     res.status(200).send("Logged out")
 })
 
-
 AuthRouter.get('/verify', (req, res) => {
     const token = req.cookies.token;
 
-    if(!token){
-        return res.status(401).json({ message: "Unauthorized" });
+    if (!token) {
+        return res.status(401).json({ message: "Unauthorized from the API" });
     }
 
-    try{
-        const decoded = jwt.verify(token, process.env.SECRET)
-
-      
-    
-        res.status(200).json({ user: decoded.data });
+    try {
+        const decoded = jwt.verify(token, process.env.SECRET);
+        res.status(200).json({ user: decoded.data, token: token });
+    } catch (err) {
+        console.log(err);
+        return res.status(403).json({ message: "Forbidden" });
     }
-    catch(err){
-        console.log(err)
-        return res.status(403).json({message: "Forbinned"})
-    }
-
-})
+});
 
 
 export default AuthRouter

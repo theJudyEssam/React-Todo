@@ -6,9 +6,9 @@ import { AuthProvider } from './components/context/authContext';
 
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <AuthProvider>
+  <AuthProvider> <StrictMode>
+   
       <App />
-    </AuthProvider>
-  </StrictMode>,
+    
+  </StrictMode></AuthProvider>,
 )

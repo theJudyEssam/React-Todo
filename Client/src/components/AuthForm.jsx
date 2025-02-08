@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import Button from "./Button";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , Link} from 'react-router-dom';
+import {useAuth} from "./context/authContext"
+import Cookies from 'universal-cookie'
 
 
+const cookies = new Cookies();
 
 const login = async (username, password) => {
     try {
-
         const res = await axios.post('http://localhost:3000/login',
             { username, password }, { withCredentials: true });
-        console.log(res);
-        return true;
+        console.log("from authform" + res);
+        return res.data.token;
     } catch (err) {
         console.error(err.response?.data || "Error");
-        return false;
+        return null;
     }
 };
 
@@ -26,10 +28,10 @@ const register = async (fullname, username, email, password) => {
             { withCredentials: true }
         );
         console.log(res.data);
-        return true;
+        return res.data.token;
     } catch (err) {
         console.error(err.response?.data || "Error");
-        return false;
+        return null;
     }
 };
 
@@ -37,6 +39,7 @@ const register = async (fullname, username, email, password) => {
 
 function AuthForm({ isLogin }) {
     const navigate = useNavigate();
+    const {setToken} = useAuth();
 
     const [formData, setFormData] = useState({
         fullname: '',
@@ -57,11 +60,13 @@ function AuthForm({ isLogin }) {
     const handleLogin = async (e) => {
         e.preventDefault();
         const { username, password } = formData;
-        const success = await login(username, password);
-        if (success) {
+        const token = await login(username, password);
+        if (token) {
+            setToken(token);
+            cookies.set('token', token, { path: '/' });
             navigate('/home');
         } else {
-            alert("Invalid Credentials from handlelogin");
+            alert("Invalid Credentials");
         }
     };
 
@@ -72,8 +77,10 @@ function AuthForm({ isLogin }) {
             alert("Passwords do not match");
             return;
         }
-        const success = await register(fullname, username, email, password);
-        if (success) {
+        const token = await register(fullname, username, email, password);
+        if (token) {
+            setToken(token);
+            cookies.set('token', token, { path: '/' });
             navigate('/home');
         } else {
             alert("Registration Failed");
