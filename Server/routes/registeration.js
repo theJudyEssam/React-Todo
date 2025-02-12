@@ -47,7 +47,7 @@ AuthRouter.post('/register', async (req, res) => {
 
                 const token = jwt.sign({data:username}, process.env.SECRET, {expiresIn: '1h'})
 
-                res.cookie('token', token, {httpOnly: true, sameSite: 'None', maxAge: 3600000})
+                res.cookie('token', token, {httpOnly: true, sameSite: 'None', maxAge: 60})
 
                 res.status(200).json({
                     status: "success",
@@ -87,7 +87,7 @@ AuthRouter.post('/login', async (req, res) => {
             if(result){
                 const token = jwt.sign({data:username}, process.env.SECRET, {expiresIn: '1h'})
 
-                res.cookie('token', token, {httpOnly: true, sameSite: 'None', maxAge: 60})
+                res.cookie('token', token, {httpOnly: true, sameSite: 'None', maxAge: 36})
 
                 res.status(200).json({
                     status: "success",

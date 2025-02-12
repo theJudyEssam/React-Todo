@@ -16,7 +16,7 @@ CRouter.post("/add", async (req, res)=>{
 
 
     try{
-        const query = await pool.query("INSERT into todos (todo, username) VALUES ($1, $2) ", [todo, username])
+        const query = await pool.query("INSERT into todos (todo_text, user_id) VALUES ($1, $2) ", [todo, username])
         res.status(200).send("Todo added")
     }
     catch(err){
@@ -28,7 +28,7 @@ CRouter.get("/get/:username", async (req, res)=>{
     const username = req.params.username;
 
     try{
-        const query = await pool.query("SELECT * FROM todos WHERE username = $1", [username])
+        const query = await pool.query("SELECT * FROM todos WHERE user_id = $1", [username])
         res.status(200).json(query.rows)
     }
     catch(err){
