@@ -5,8 +5,8 @@ import bodyParser from "body-parser"
 
 
 const CRouter = express.Router()
-AuthRouter.use(bodyParser.json())
-AuthRouter.use(bodyParser.urlencoded({ extended: true }))
+CRouter.use(bodyParser.json())
+CRouter.use(bodyParser.urlencoded({ extended: true }))
 
 
 
@@ -53,7 +53,7 @@ CRouter.put("/update/:id", async (req, res)=>{
     const todo = req.body.todo;
 
     try{
-        const query = await pool.query("UPDATE todos SET todo = $1 WHERE id = $2", [todo, id])
+        const query = await pool.query("UPDATE todos SET todo_text = $1 WHERE id = $2", [todo, id])
         res.status(200).send("Todo updated")
     }
     catch(err){

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Todo from "../Todo";
 import { useAuth } from "../context/authContext";
 
@@ -21,47 +22,44 @@ function Homepage(props) {
 
 
   const handleAdd = (e) =>{
-
-    useEffect(()=>{
+    e.preventDefault();
+  
       const addTodo = async () => {
         try{
           const response = await axios.post(`http://localhost:3000/add`, {todo: input, username:user}, { withCredentials: true });
-          console.log(response.data)     
+          console.log(response.data) 
+          setInput(""); // Clear the input field
+          handleGet();    
         }
         catch(err){
           console.log(err)
         }
       }
-      addTodo()
-    })
-
+       addTodo()
+  
   
     console.log("added")
 
   }
 
   const handleGet = (e) =>{
-
-    useEffect(()=>{
-      const getTodos = async () => {
-        try{
-          const response = await axios.get(`http://localhost:3000/get/${user}`,{}, { withCredentials: true });
-          console.log(response.data.todos)     
-          setTodo(response.data.todos)
-        }
-        catch(err){
-          console.log(err)
-        }
+    const getTodos = async () => {
+      try{
+        const response = await axios.get(`http://localhost:3000/get/${user}`,{}, { withCredentials: true });
+        console.log(response.data[0].todo_text)     
+        setTodo(response.data)
       }
-      getTodos()
+      catch(err){
+        console.log(err)
+      }
+    }
+    getTodos()
 
-    })
   }
 
 
 const handleDelete = (e) =>{
 
-  useEffect(()=>{
     const deleteTodo = async () => {
       try{
         const response = await axios.delete(`http://localhost:3000/delete/`, { withCredentials: true });
@@ -75,27 +73,28 @@ const handleDelete = (e) =>{
 
 
 
-  })}
+  }
 
 
 
 const handleUpdate = (e) =>{  
-  useEffect(()=>{
-    const updateTodo = async () => {
-      try{
-        const response = await axios.put(`http://localhost:3000/update/`, { withCredentials: true });
-        console.log(response.data)     
-      }
-      catch(err){
-        console.log(err)
-      }
+ 
+  const updateTodo = async () => {
+    try{
+      const response = await axios.put(`http://localhost:3000/update/`, { withCredentials: true });
+      console.log(response.data)     
     }
-    updateTodo()
-  })
+    catch(err){
+      console.log(err)
+    }
+  }
+  updateTodo()
+
 }
 
-
-
+useEffect(() => {
+  handleGet();
+}, [user]); 
 
 
   return (
@@ -111,7 +110,7 @@ const handleUpdate = (e) =>{
           <div className="todo-list">
            
             {todos.map((todo) => (
-                    <Todo task={todo.todo} />
+                    <Todo task={todo} />
                 ))}
           </div>
 

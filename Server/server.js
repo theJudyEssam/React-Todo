@@ -2,6 +2,7 @@ import express from "express"
 import cors from "cors"
 import dotenv from "dotenv"
 import AuthRouter from "./routes/registeration.js"
+import CRouter from "./routes/crud.js"
 
 
 const app = express()
@@ -16,6 +17,7 @@ dotenv.config()
 
 app.use("/", AuthRouter);
 app.use("/:username", AuthRouter);
+app.use("/", CRouter);
 
 
 app.listen(process.env.PORT, () => {

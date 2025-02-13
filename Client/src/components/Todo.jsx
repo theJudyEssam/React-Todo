@@ -18,7 +18,7 @@ function Todo(props){
         <div className="todo"> 
             <div className="todo-info">
                 <IoIosCheckboxOutline onClick={todo_logic} style={{ fontSize: '24px' }}/>
-                <h2>{props.task}</h2>
+                <h2>{props.task.todo_text}</h2>
                
             </div>
             <div className="todo-actions">
