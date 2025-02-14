@@ -58,39 +58,6 @@ function Homepage(props) {
   }
 
 
-const handleDelete = (e) =>{
-
-    const deleteTodo = async () => {
-      try{
-        const response = await axios.delete(`http://localhost:3000/delete/`, { withCredentials: true });
-        console.log(response.data)     
-      }
-      catch(err){
-        console.log(err)
-      }
-    }
-    deleteTodo()
-
-
-
-  }
-
-
-
-const handleUpdate = (e) =>{  
- 
-  const updateTodo = async () => {
-    try{
-      const response = await axios.put(`http://localhost:3000/update/`, { withCredentials: true });
-      console.log(response.data)     
-    }
-    catch(err){
-      console.log(err)
-    }
-  }
-  updateTodo()
-
-}
 
 useEffect(() => {
   handleGet();
