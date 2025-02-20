@@ -1,9 +1,9 @@
 
-import Button from "./Button"
 import { MdDeleteForever, MdEdit } from "react-icons/md";
 import { IoIosCheckboxOutline } from "react-icons/io";
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
 
 
 
@@ -11,13 +11,25 @@ function Todo(props){
 
     const [isEditing, setisEditing] = useState(false);
     const [isEditingInput, setisEditingInput] = useState(props.task ? props.task.todo_text : ""); // have initial val
-    const [isCompleted, setisCompleted] = useState(false);
+    const [isCompleted, setisCompleted] = useState(props.task ? props.task.completed : true);
     
-    const todo_logic = (e) =>{
-        setisCompleted(!isCompleted);
+    
+    // have initial val
+    const todo_logic = async (e) => {
+      e.preventDefault();
+      const newIsCompleted = !isCompleted;
+      setisCompleted(newIsCompleted); // toggle 
 
-    }
+      console.log(`i am in the todo_logic and its ${newIsCompleted}`);
 
+      try {
+          const response = await axios.put(`http://localhost:3000/complete/${props.task.id}`, { complete: newIsCompleted }, { withCredentials: true });
+          console.log(response.data);
+         // window.location.reload();
+      } catch (err) {
+          console.log(err);
+      }
+  };
 
   
     
@@ -62,13 +74,20 @@ function Todo(props){
     
     }
 
+    
+    useEffect(() => {
+      console.log("it is" + props.task.completed)
+      console.log("it is " + isCompleted)
+    },[]); 
+    
+
     return (
         <div className="todo"> 
             <div className="todo-info">
             <IoIosCheckboxOutline onClick={todo_logic} style={{ fontSize: '24px' }}/>
             {isEditing ? <input type="text" onChange={(e) => setisEditingInput(e.target.value)} value={isEditingInput} placeholder={props.text? props.text.todo_text : ""} /> :
-            <p style={isCompleted ? {textDecoration: "line-through"} : {textDecoration: "none"}} onClick={changeInput}>{props.task ? props.task.todo_text : ""}</p>}
-           
+            <p style={isCompleted ? {textDecoration: "none"} : {textDecoration: "line-through"}} onClick={changeInput}>{props.task ? props.task.todo_text : ""}</p>}
+            
             </div>
             <form className="todo-actions">
             <button type="button" onClick={handleisEditing}>

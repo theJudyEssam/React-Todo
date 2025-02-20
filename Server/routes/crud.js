@@ -64,9 +64,10 @@ CRouter.put("/update/:id", async (req, res)=>{
 
 CRouter.put("/complete/:id", async (req, res)=>{
     const id = req.params.id;
-
+    const complete = req.body.complete
+    console.log("in completed")
     try{
-        const query = await pool.query("UPDATE todos SET completed = NOT completed WHERE id = $1", [id])
+        const query = await pool.query("UPDATE todos SET completed = $1 WHERE id = $2", [complete,id])
     res.status(200).send("Todo updated {completed}")
     }
     catch(err){
