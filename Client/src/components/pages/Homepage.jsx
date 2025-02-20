@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Todo from "../Todo";
 import { useAuth } from "../context/authContext";
+import AuthForm from '../AuthForm';
+import { useNavigate } from 'react-router-dom';
 
 function Homepage(props) {
 
   const [todos, setTodo] = useState([]);
   const [input, setInput] = useState("");
   const { token, setToken, isAuthenticated , user} = useAuth();
-
+  const navigate = useNavigate();
   const handleLogout = () => {
     setToken(null);
     document.cookie = 'token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
@@ -60,7 +62,14 @@ function Homepage(props) {
 
 
 useEffect(() => {
-  handleGet();
+
+  if(!isAuthenticated){
+    navigate('/')
+  }
+  else{
+    handleGet();
+  }
+  
 }, [user]); 
 
 
@@ -84,7 +93,7 @@ useEffect(() => {
           <button className="logout" onClick={handleLogout}>Logout</button>
         </>
       ) : (
-        <p>Oops! You have not logged in yet.</p>
+        <AuthForm  isLogin = {true}/>
       )}
     </div>
   );

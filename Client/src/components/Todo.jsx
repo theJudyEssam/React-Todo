@@ -10,11 +10,10 @@ import { useState, useEffect } from 'react';
 function Todo(props){
 
     const [isEditing, setisEditing] = useState(false);
-    const [isEditingInput, setisEditingInput] = useState(props.task ? props.task.todo_text : ""); // have initial val
+    const [isEditingInput, setisEditingInput] = useState(props.task ? props.task.todo_text : "");
     const [isCompleted, setisCompleted] = useState(props.task ? props.task.completed : true);
     
     
-    // have initial val
     const todo_logic = async (e) => {
       e.preventDefault();
       const newIsCompleted = !isCompleted;
@@ -24,8 +23,8 @@ function Todo(props){
 
       try {
           const response = await axios.put(`http://localhost:3000/complete/${props.task.id}`, { complete: newIsCompleted }, { withCredentials: true });
-          console.log(response.data);
-         // window.location.reload();
+        //  console.log(response.data);
+         
       } catch (err) {
           console.log(err);
       }
@@ -75,10 +74,10 @@ function Todo(props){
     }
 
     
-    useEffect(() => {
-      console.log("it is" + props.task.completed)
-      console.log("it is " + isCompleted)
-    },[]); 
+    // useEffect(() => {
+    //   console.log("it is" + props.task.completed)
+    //   console.log("it is " + isCompleted)
+    // },[]); 
     
 
     return (
@@ -97,6 +96,7 @@ function Todo(props){
             <MdDeleteForever style={{ fontSize: '24px' }}/>
             </button>
             </form>
+            
         </div>
         )
 }

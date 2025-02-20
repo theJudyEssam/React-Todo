@@ -12,7 +12,7 @@ const login = async (username, password) => {
     try {
         const res = await axios.post('http://localhost:3000/login',
             { username, password }, { withCredentials: true });
-        console.log("from authform" + res);
+      //  console.log("from authform" + res);
         return res.data.token;
     } catch (err) {
         console.error(err.response?.data || "Error");
@@ -27,7 +27,7 @@ const register = async (fullname, username, email, password) => {
             { fullname, username, email, password },
             { withCredentials: true }
         );
-        console.log(res.data);
+    //    console.log(res.data);
         return res.data.token;
     } catch (err) {
         console.error(err.response?.data || "Error");
@@ -38,6 +38,7 @@ const register = async (fullname, username, email, password) => {
 
 
 function AuthForm({ isLogin }) {
+    
     const navigate = useNavigate();
     const {setToken} = useAuth();
 

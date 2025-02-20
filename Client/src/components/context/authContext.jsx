@@ -18,10 +18,10 @@ export const AuthProvider = ({children}) => {
     useEffect(()=>{
         const checkUser = async () => {
             try{
-                console.log("yo")
+            //    console.log("yo")
                 const response = await axios.get("http://localhost:3000/verify", { withCredentials: true });
-                console.log("bloo00000" + response.data.user)     
-                console.log(response.data.token)  
+            //    console.log("bloo00000" + response.data.user)     
+            //   console.log(response.data.token)  
                 setToken(response.data.token)
                 setUser(response.data.user)
                 setLoading(false)
@@ -45,7 +45,7 @@ export const AuthProvider = ({children}) => {
             if (token) {
                 checkUser();
             }
-        }, 120*1000); // Check every 5 seconds
+        }, 120*1000); // 2 minutes
 
         return () => clearInterval(interval); // Cleanup interval on unmount
     }, [token]);
